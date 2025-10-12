@@ -9,7 +9,6 @@ INCDIR = includes
 
 SRCS = $(SRCDIR)/main.c \
        $(SRCDIR)/algorithms/small_sort.c \
-       $(SRCDIR)/algorithms/sort_utils.c \
        $(SRCDIR)/algorithms/compress.c \
        $(SRCDIR)/algorithms/turk_helpers.c \
        $(SRCDIR)/algorithms/turk_algorithm.c \
