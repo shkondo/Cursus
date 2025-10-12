@@ -6,7 +6,7 @@
 /*   By: shkondo <shkondo@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:00:00 by shkondo           #+#    #+#             */
-/*   Updated: 2025/10/05 22:01:34 by shkondo          ###   ########.fr       */
+/*   Updated: 2025/10/12 15:00:10 by shkondo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	push_front(t_stack *stack, int value)
 	stack->head->next = new_node;
 	stack->size++;
 }
-
 
 int	get_at_index(t_stack *stack, int index)
 {

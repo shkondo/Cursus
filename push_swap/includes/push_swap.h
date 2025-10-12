@@ -61,7 +61,6 @@ int			find_target_cached(t_data *data, int value, int min_pos);
 int			is_sorted(t_stack *stack);
 int			find_min_index(t_stack *stack);
 int			find_max_index(t_stack *stack);
-int			find_second_min_index(t_stack *stack);
 void		free_data(t_data *data);
 int			ft_atoi(const char *str);
 void		ft_putstr_fd(char *s, int fd);
