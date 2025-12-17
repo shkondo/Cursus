@@ -1,0 +1,116 @@
+#include "broken_gnl.h"
+
+char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (s + i);
+		i++;
+	}
+	return (NULL);
+}
+
+size_t	ft_strlen(char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	for (size_t i = 0; i < n; i++)
+		((char *)dst)[i] = ((char *)src)[i];
+	return (dst);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t n)
+{
+	if (!dst || !src)
+		return (NULL);
+	if (dst > src)
+	{
+		for (size_t i = n; i > 0; i--)
+			((char *)dst)[i - 1] = ((char *)src)[i - 1];
+	}
+	else if (dst != src)
+	{
+		for (size_t i = 0; i < n; i++)
+			((char *)dst)[i] = ((char *)src)[i];
+	}
+	return (dst);
+}
+
+int	str_append_mem(char **s1, char *s2, size_t size2)
+{
+	size_t	size1;
+	char	*tmp;
+
+	if (!s1 || !s2)
+		return (0);
+	size1 = *s1 ? ft_strlen(*s1) : 0;
+	tmp = malloc(size1 + size2 + 1);
+	if (!tmp)
+		return (0);
+	ft_memcpy(tmp, *s1, size1);
+	ft_memcpy(tmp + size1, s2, size2);
+	tmp[size1 + size2] = 0;
+	free(*s1);
+	*s1 = tmp;
+	return (1);
+}
+
+int	str_append_str(char **s1, char *s2)
+{
+	return (str_append_mem(s1, s2, ft_strlen(s2)));
+}
+
+char	*get_next_line(int fd)
+{
+	static char	b[BUFFER_SIZE + 1] = "";
+	char		*ret;
+	char		*tmp;
+	int			read_ret;
+
+	ret = NULL;
+	tmp = ft_strchr(b, '\n');
+	while (!tmp)
+	{
+		if (!str_append_str(&ret, b))
+		{
+			free(ret);
+			return (NULL);
+		}
+		read_ret = read(fd, b, BUFFER_SIZE);
+		if (read_ret == -1)
+		{
+			free(ret);
+			return (NULL);
+		}
+		if (read_ret == 0)
+		{
+			if (ret)
+				return (ret);
+			free(ret);
+			return (NULL);
+		}
+		b[read_ret] = '\0';
+		tmp = ft_strchr(b, '\n');
+	}
+	if (!str_append_mem(&ret, b, tmp - b + 1))
+	{
+		free(ret);
+		return (NULL);
+	}
+	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
+	return (ret);
+}
