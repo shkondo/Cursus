@@ -63,6 +63,8 @@ void	rip(char *str, int to_replace, int replaced, int pos)
 	}
 	for (int i = pos; str[i]; i++)
 	{
+		if (str[i] == ' ')
+			continue ;
 		if (str[i] == '(' || str[i] == ')')
 		{
 			c = str[i];

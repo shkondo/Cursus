@@ -9,12 +9,12 @@ void	ft_putnum(int n)
 	write(1, &c, 1);
 }
 
-void	solve(int *arr, int arg_len, int target, int idx, int *sub, int sub_len,
-		int sum)
+void	solve(int *arr, int target, size_t arg_len, int idx, int *sub,
+		size_t sub_len, int sum)
 {
 	if (idx == arg_len)
 	{
-		if (sum == target)
+		if (target == sum)
 		{
 			for (int i = 0; i < sub_len; i++)
 			{
@@ -26,17 +26,17 @@ void	solve(int *arr, int arg_len, int target, int idx, int *sub, int sub_len,
 		}
 		return ;
 	}
-	solve(arr, arg_len, target, idx + 1, sub, sub_len, sum);
+	solve(arr, target, arg_len, idx + 1, sub, sub_len, sum);
 	sub[sub_len] = arr[idx];
-	solve(arr, arg_len, target, idx + 1, sub, sub_len + 1, sum + arr[idx]);
+	solve(arr, target, arg_len, idx + 1, sub, sub_len + 1, sum + arr[idx]);
 }
 
 int	main(int argc, char **argv)
 {
-	int	target;
-	int	arg_len;
-	int	*arr;
-	int	*sub;
+	int		*arr;
+	int		*sub;
+	int		target;
+	size_t	arg_len;
 
 	if (argc < 3)
 		return (0);
@@ -45,10 +45,14 @@ int	main(int argc, char **argv)
 	arr = malloc(arg_len * sizeof(int));
 	sub = malloc(arg_len * sizeof(int));
 	if (!arr || !sub)
+	{
+		free(arr);
+		free(sub);
 		return (1);
+	}
 	for (int i = 0; i < arg_len; i++)
-		arr[i] = atoi(argv[2 + i]);
-	solve(arr, arg_len, target, 0, sub, 0, 0);
+		arr[i] = atoi(argv[i + 2]);
+	solve(arr, target, arg_len, 0, sub, 0, 0);
 	free(arr);
 	free(sub);
 	return (0);

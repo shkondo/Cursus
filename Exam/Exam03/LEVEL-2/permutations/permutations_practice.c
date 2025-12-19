@@ -9,7 +9,7 @@ void	sorted(char *str)
 	{
 		for (int j = 0; str[j]; j++)
 		{
-			if (str[i] > str[j])
+			if (str[j] > str[i])
 			{
 				tmp = str[i];
 				str[i] = str[j];
@@ -21,7 +21,7 @@ void	sorted(char *str)
 
 void	perm(char *str, char *res, int *used, int dep, int len)
 {
-	if (dep = len)
+	if (dep == len)
 	{
 		write(1, res, len);
 		write(1, "\n", 1);
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 	int		*used;
 	int		len;
 
-	if (argc != 2)
+	if (argc != 2 || !argv[1][0])
 		return (1);
 	len = 0;
 	while (argv[1][len])
