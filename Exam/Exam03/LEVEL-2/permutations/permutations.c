@@ -5,9 +5,9 @@ void	sorted(char *str)
 {
 	char	tmp;
 
-	for (int i = 0; str[i]; i++)
+	for (size_t i = 0; str[i]; i++)
 	{
-		for (int j = i + 1; str[j]; j++)
+		for (size_t j = i + 1; str[j]; j++)
 		{
 			if (str[i] > str[j])
 			{
@@ -19,7 +19,7 @@ void	sorted(char *str)
 	}
 }
 
-void	perm(char *str, char *res, int *used, int dep, int len)
+void	perm(char *str, char *res, int *used, size_t dep, size_t len)
 {
 	if (dep == len)
 	{
@@ -27,7 +27,7 @@ void	perm(char *str, char *res, int *used, int dep, int len)
 		write(1, "\n", 1);
 		return ;
 	}
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		if (used[i])
 			continue ;
@@ -60,7 +60,7 @@ int	main(int argc, char **argv)
 		free(used);
 		return (1);
 	}
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 		str[i] = argv[1][i];
 	str[len] = '\0';
 	sorted(str);

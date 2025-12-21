@@ -1,43 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	solve(int *arr, int n, int target, int idx, int *sub, int len, int sum)
+void	solve(int *arr, size_t arr_len, int target, int idx, int *sub,
+		size_t sub_len, int sum)
 {
-	if (idx == n)
+	if (idx == arr_len)
 	{
 		if (sum == target)
 		{
-			for (int i = 0; i < len; i++)
+			for (size_t i = 0; i < sub_len; i++)
 			{
-				printf("%d", sub[i]);
-				if (i < len - 1)
+				if (i > 0)
 					printf(" ");
+				printf("%d", sub[i]);
 			}
 			printf("\n");
 		}
 		return ;
 	}
-	solve(arr, n, target, idx + 1, sub, len, sum);
-	sub[len] = arr[idx];
-	solve(arr, n, target, idx + 1, sub, len + 1, sum + arr[idx]);
+	solve(arr, arr_len, target, idx + 1, sub, sub_len, sum);
+	sub[sub_len] = arr[idx];
+	solve(arr, arr_len, target, idx + 1, sub, sub_len + 1, sum + arr[idx]);
 }
 
 int	main(int argc, char **argv)
 {
-	int	target;
-	int	n;
-	int	*arr;
-	int	*sub;
+	int		target;
+	int		*arr;
+	int		*sub;
+	size_t	arr_len;
 
 	if (argc < 3)
 		return (1);
 	target = atoi(argv[1]);
-	n = argc - 2;
-	arr = malloc(sizeof(int) * n);
-	sub = malloc(sizeof(int) * n);
-	for (int i = 0; i < n; i++)
+	arr_len = argc - 2;
+	arr = malloc(arr_len * sizeof(int));
+	sub = malloc(arr_len * sizeof(int));
+	if (!arr || !sub)
+	{
+		free(arr);
+		free(sub);
+		return (1);
+	}
+	for (size_t i = 0; i < arr_len; i++)
 		arr[i] = atoi(argv[i + 2]);
-	solve(arr, n, target, 0, sub, 0, 0);
+	solve(arr, arr_len, target, 0, sub, 0, 0);
 	free(arr);
 	free(sub);
 	return (0);

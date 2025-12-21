@@ -28,9 +28,9 @@ int	count_to_replace(char *str)
 
 int	is_valid(char *str)
 {
-	int	opened;
+	int	balance;
 
-	opened = 0;
+	balance = 0;
 	if (!str)
 		return (1);
 	for (int i = 0; str[i]; i++)
@@ -38,18 +38,18 @@ int	is_valid(char *str)
 		if (str[i] == ' ')
 			continue ;
 		if (str[i] == '(')
-			opened++;
+			balance++;
 		else if (str[i] == ')')
 		{
-			opened--;
-			if (opened < 0)
+			balance--;
+			if (balance < 0)
 				return (1);
 		}
 	}
-	return (opened);
+	return (balance == 0);
 }
 
-void	rip(char *str, int to_replace, int replaced, int pos)
+void	rip(char *str, int to_replace, int replaced, size_t pos)
 {
 	char	c;
 
@@ -61,7 +61,7 @@ void	rip(char *str, int to_replace, int replaced, int pos)
 			puts(str);
 		return ;
 	}
-	for (int i = pos; str[i]; i++)
+	for (size_t i = pos; str[i]; i++)
 	{
 		if (str[i] == ' ')
 			continue ;
@@ -77,20 +77,11 @@ void	rip(char *str, int to_replace, int replaced, int pos)
 
 int	main(int argc, char **argv)
 {
-	int		count;
-	int		i;
-	char	buf[1000];
+	int	count;
 
-	i = 0;
 	if (argc != 2 || !argv[1])
 		return (1);
-	while (argv[1][i])
-	{
-		buf[i] = argv[1][i];
-		i++;
-	}
-	buf[i] = '\0';
-	count = count_to_replace(buf);
-	rip(buf, count, 0, 0);
+	count = count_to_replace(argv[1]);
+	rip(argv[1], count, 0, 0);
 	return (0);
 }

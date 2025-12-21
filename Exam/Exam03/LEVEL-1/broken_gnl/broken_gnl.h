@@ -1,6 +1,7 @@
 #ifndef BROKEN_GNL
 # define BROKEN_GNL
 
+# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -8,6 +9,6 @@
 #  define BUFFER_SIZE 10
 # endif
 
-char    *get_next_line(int fd);
+char	*get_next_line(int fd);
 
 #endif

@@ -20,49 +20,65 @@ This repository contains solutions for 42 School's Exam Rank 03, organized by di
 ## Level 1 Exercises
 
 ### broken_gnl
+
 Implementation of `get_next_line` function that reads a file line by line.
+
 - **Files**: `brocken_gnl.c`, `my_broken_gnl.c`
 - **Key concepts**: File I/O, static variables, buffer management
 
 ### filter
+
 Program that reads from stdin and replaces occurrences of a given word with asterisks.
+
 - **Files**: `filter.c`, `filter2.c`
 - **Usage**: `echo "hello world" | ./filter hello` → `***** world`
 - **Key concepts**: String manipulation, memory management, stdin processing
 
 ### scanf
+
 Custom implementation of `scanf` function supporting `%c`, `%d`, and `%s` format specifiers.
+
 - **Files**: `scanf2.c`, `s.c`
 - **Key concepts**: Variadic functions, format parsing, input validation
 
 ## Level 2 Exercises
 
 ### n_queens
+
 Solves the N-Queens problem using backtracking algorithm.
+
 - **Files**: `n_queens.c`, `my_n_queen.c`
 - **Usage**: `./n_queens 4` outputs all valid queen placements on a 4x4 board
 - **Key concepts**: Backtracking, recursion, constraint satisfaction
 
 ### permutations
+
 Generates all permutations of a given string in alphabetical order.
+
 - **Files**: `permutations.c`, `permutations2.c`
 - **Usage**: `./permutations abc` → outputs all permutations of "abc"
 - **Key concepts**: Recursion, backtracking, sorting algorithms
 
 ### powerset
+
 Finds all subsets of a given set that sum to a target value.
+
 - **Files**: `powerset.c`
 - **Usage**: `./powerset 5 2 3` → outputs subsets that sum to 5
 - **Key concepts**: Subset generation, dynamic programming concepts
 
 ### rip
+
 Balances parentheses by removing the minimum number of characters.
+
 - **Files**: `rip2.c`
 - **Usage**: `./rip "(()"` → outputs all valid balanced strings
 - **Key concepts**: String validation, backtracking, recursion
 
 ### tsp
+
 Solves the Traveling Salesman Problem using brute force with optimizations.
+
 - **Files**: `tsp.c`, `tsp_give.c`
 - **Input format**: City coordinates as `x, y` pairs
 - **Key concepts**: Graph algorithms, optimization, geometric calculations
@@ -70,11 +86,13 @@ Solves the Traveling Salesman Problem using brute force with optimizations.
 ## Compilation
 
 Most programs can be compiled with:
+
 ```bash
 gcc -Wall -Wextra -Werror *.c -o program_name
 ```
 
 For TSP, add math library:
+
 ```bash
 gcc -Wall -Wextra -Werror tsp.c -lm -o tsp
 ```

@@ -13,6 +13,7 @@ size_t	ft_strlen(char *s)
 		len++;
 	return (len);
 }
+
 int	read_input(char **buf, size_t *len)
 {
 	char	*tmp;
@@ -45,6 +46,7 @@ int	read_input(char **buf, size_t *len)
 	*len = total_size;
 	return (1);
 }
+
 void	filter(char *haystack, size_t haystack_len, char *needle,
 		size_t needle_len)
 {

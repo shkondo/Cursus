@@ -2,17 +2,14 @@
 
 char	*ft_strchr(char *s, int c)
 {
-	int	i;
-
 	if (!s)
 		return (NULL);
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	if (s[i] == c)
-		return (s + i);
-	else
-		return (NULL);
+	for (size_t i = 0; s[i]; i++)
+	{
+		if (s[i] == (char)c)
+			return (s + i);
+	}
+	return (NULL);
 }
 
 size_t	ft_strlen(char *s)
@@ -46,21 +43,13 @@ void	*ft_memmove(void *dst, const void *src, size_t n)
 		return (NULL);
 	if (dst > src)
 	{
-		i = n;
-		while (i > 0)
-		{
-			i--;
-			((char *)dst)[i] = ((char *)src)[i];
-		}
+		for (size_t i = n; i > 0; i--)
+			((char *)dst)[i - 1] = ((char *)src)[i - 1];
 	}
 	else if (dst != src)
 	{
-		i = 0;
-		while (i < n)
-		{
+		for (size_t i = 0; i > n; i++)
 			((char *)dst)[i] = ((char *)src)[i];
-			i++;
-		}
 	}
 	return (dst);
 }
@@ -128,24 +117,4 @@ char	*get_next_line(int fd)
 	}
 	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
 	return (ret);
-}
-
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("file.txt", O_RDONLY);
-	if (fd == -1)
-		return (1);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
 }

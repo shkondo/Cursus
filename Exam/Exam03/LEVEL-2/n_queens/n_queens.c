@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	is_safe(int col, int row, int *pos)
+int	is_valid(int col, int row, int *pos)
 {
 	for (int i = 0; i < col; i++)
 	{
@@ -31,7 +31,7 @@ void	solve(int n, int col, int *pos)
 	}
 	for (int row = 0; row < n; row++)
 	{
-		if (is_safe(col, row, pos))
+		if (is_valid(pos, col, row))
 		{
 			pos[col] = row;
 			solve(n, col + 1, pos);
@@ -42,16 +42,16 @@ void	solve(int n, int col, int *pos)
 int	main(int argc, char **argv)
 {
 	int	n;
-	int	*res;
+	int	*pos;
 
 	if (argc == 2 && argv[1][0] != '-')
 	{
 		n = atoi(argv[1]);
-		res = malloc(n * sizeof(int));
-		if (!res)
+		pos = malloc(n * sizeof(int));
+		if (!pos)
 			return (1);
-		solve(n, 0, res);
-		free(res);
+		solve(n, 0, pos);
+		free(pos);
 	}
 	return (0);
 }

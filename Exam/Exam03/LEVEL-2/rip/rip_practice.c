@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int	count_to_replace(char *s)
@@ -44,7 +44,7 @@ int	is_valid(char *s)
 				return (0);
 		}
 	}
-	return (1);
+	return (balance == 0);
 }
 
 void	rip(char *s, int to_replace, int replaced, int pos)
@@ -65,7 +65,7 @@ void	rip(char *s, int to_replace, int replaced, int pos)
 		{
 			c = s[i];
 			s[i] = ' ';
-			rip(s, to_replace, replaced + 1, pos + 1);
+			rip(s, to_replace, replaced + 1, i + 1);
 			s[i] = c;
 		}
 	}
