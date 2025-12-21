@@ -6,13 +6,3 @@ a.out
 *.swap
 *.swo
 
-# Exam03 - Level1
-get_next_line
-filter
-
-#Exam03 - Level2
-permutations
-rip
-powerset
-n-queens
-tsp

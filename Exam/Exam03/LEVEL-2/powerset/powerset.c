@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	solve(int *arr, size_t arr_len, int target, int idx, int *sub,
+void	solve(int *arr, size_t arr_len, int target, size_t idx, int *sub,
 		size_t sub_len, int sum)
 {
 	if (idx == arr_len)
