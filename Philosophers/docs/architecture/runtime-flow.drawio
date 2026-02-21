@@ -1,0 +1,105 @@
+<mxfile host="app.diagrams.net" modified="2026-02-21T00:00:00.000Z" agent="cursor-gpt-5.3-codex" version="24.7.17" editor="draw.io" type="device">
+  <diagram id="runtime-flow-01" name="動作フロー図">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" value="シミュレーション開始" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#6aa84f;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="70" y="80" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="spawn" value="哲学者スレッドを生成&#10;last_meal = 現在時刻で初期化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c9daf8;strokeColor=#6c8ebf;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="280" y="70" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="loop" value="哲学者ごとのループ&#10;while stop_flag == false" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe599;strokeColor=#bf9000;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="70" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="fork1" value="1本目のフォークを取る&#10;(mutex lock)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="210" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="fork2" value="2本目のフォークを取る&#10;(mutex lock)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="eat" value="食事 (time_to_eat)&#10;last_meal と eat_count を更新" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#6aa84f;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="430" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="release" value="2本のフォークを戻す&#10;(mutex unlock x2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="560" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sleep" value="睡眠 (time_to_sleep)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9c2e9;strokeColor=#8e7cc3;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="670" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="think" value="思考" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9c2e9;strokeColor=#8e7cc3;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="560" y="780" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor" value="監視ループ&#10;各哲学者について確認:&#10;(now - last_meal) &gt; time_to_die ?" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9cb9c;strokeColor=#b45f06;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="920" y="150" width="290" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="dead" value="死亡した哲学者はいるか?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="960" y="310" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="done" value="全哲学者の&#10;eat_count &gt;= target ?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe599;strokeColor=#bf9000;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="960" y="470" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="setstop" value="stop_flag = true を設定&#10;死亡 or 完了をログ出力" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1c232;strokeColor=#7f6000;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="930" y="640" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="end" value="スレッドjoin&#10;後始末して終了" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#6aa84f;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="960" y="800" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="start" target="spawn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="spawn" target="loop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="loop" target="fork1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="fork1" target="fork2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="fork2" target="eat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f6" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="eat" target="release">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f7" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="release" target="sleep">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f8" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="sleep" target="think">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f9" value="繰り返し" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="think" target="loop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f10" value="並列で監視" style="endArrow=block;endFill=1;html=1;dashed=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="spawn" target="monitor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f11" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="monitor" target="dead">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f12" value="はい" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="dead" target="setstop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f13" value="いいえ" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="dead" target="done">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f14" value="はい" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="done" target="setstop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f15" value="いいえ" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="done" target="monitor">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="525" />
+              <mxPoint x="1250" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f16" value="stop_flag が true" style="endArrow=block;endFill=1;html=1;dashed=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="setstop" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

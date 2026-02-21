@@ -1,2 +1,7 @@
+# local files
+docs/subjects
+
+# AI Settings
 CLAUDE.md
-.claude
+.claude/
+.cursor/

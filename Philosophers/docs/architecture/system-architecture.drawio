@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" modified="2026-02-21T00:00:00.000Z" agent="cursor-gpt-5.3-codex" version="24.7.17" editor="draw.io" type="device">
+  <diagram id="sys-arch-01" name="システム構成図">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="args" value="CLI引数&#10;number_of_philosophers&#10;time_to_die/eat/sleep&#10;[must_eat_count]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c9daf8;strokeColor=#6c8ebf;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="230" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="init" value="初期化&#10;(メインスレッド)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#6aa84f;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="320" y="50" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="shared" value="共有テーブル状態&#10;- start_time&#10;- stop_flag&#10;- meal_target&#10;- log_mutex" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe599;strokeColor=#bf9000;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="580" y="30" width="240" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="forks" value="フォークmutex配列&#10;fork[i] = pthread_mutex_t" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="580" y="190" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="philos" value="哲学者コンテキスト配列&#10;id, left_idx, right_idx&#10;last_meal_ms, eat_count&#10;state_mutex" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9c2e9;strokeColor=#8e7cc3;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="580" y="300" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="threads" value="N個の哲学者スレッド&#10;哲学者ごとに1スレッド" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c9daf8;strokeColor=#6c8ebf;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="900" y="230" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor" value="監視スレッド / 監視ループ&#10;死亡と完了条件を確認" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9cb9c;strokeColor=#b45f06;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="900" y="70" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="logger" value="同期ログ出力&#10;printf は log_mutex で保護" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#6aa84f;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="900" y="370" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stdout" value="標準出力(stdout)&#10;timestamp id action" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="370" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cleanup" value="スレッドjoin&#10;mutex破棄&#10;メモリ解放" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ea9999;strokeColor=#b85450;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="90" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="args" target="init">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="init" target="shared">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="init" target="forks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="init" target="philos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="生成" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="init" target="threads">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="生成" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="init" target="monitor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="lock/unlock" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="threads" target="forks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="読取/更新" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="threads" target="philos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="読取" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="monitor" target="philos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="stop_flag を設定" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="monitor" target="shared">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="状態ログ" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="threads" target="logger">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" value="死亡ログ" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="monitor" target="logger">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;" edge="1" parent="1" source="logger" target="stdout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" value="停止して join" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontColor=#1a1a1a;" edge="1" parent="1" source="shared" target="cleanup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
