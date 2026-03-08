@@ -6,3 +6,10 @@ a.out
 *.swap
 *.swo
 
+# AI settings
+CLAUDE.md
+.claude/
+.agents/
+.agent/
+.cursor/
+
