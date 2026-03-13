@@ -6,7 +6,7 @@
 /*   By: shkondo <shkondo@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:46:49 by shkondo           #+#    #+#             */
-/*   Updated: 2026/03/01 20:49:20 by shkondo          ###   ########.fr       */
+/*   Updated: 2026/03/11 10:00:00 by shkondo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,59 @@ static int	is_space(char c)
 
 int	ft_atoi(const char *str)
 {
-	size_t	i;
+	size_t	idx;
 	int		sign;
 	int		nb;
 
-	i = 0;
+	idx = 0;
 	sign = 1;
-	while (is_space(str[i]))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (is_space(str[idx]))
+		idx++;
+	if (str[idx] == '-' || str[idx] == '+')
 	{
-		if (str[i] == '-')
+		if (str[idx] == '-')
 			sign = -1;
-		i++;
+		idx++;
 	}
 	nb = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[idx] >= '0' && str[idx] <= '9')
 	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
+		nb = nb * 10 + (str[idx] - '0');
+		idx++;
 	}
 	return (nb * sign);
+}
+
+long	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
+}
+
+void	precise_sleep(long ms, t_table *table)
+{
+	long	target;
+
+	target = get_time() + ms;
+	while (get_time() < target)
+	{
+		if (is_sim_stopped(table))
+			break ;
+		usleep(200);
+	}
+}
+
+void	print_status(t_philo *philo, char *msg)
+{
+	long	timestamp;
+
+	pthread_mutex_lock(&philo->table->print_lock);
+	if (!is_sim_stopped(philo->table))
+	{
+		timestamp = get_time() - philo->table->start_time;
+		printf("%ld %d %s\n", timestamp, philo->id, msg);
+	}
+	pthread_mutex_unlock(&philo->table->print_lock);
 }

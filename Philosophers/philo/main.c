@@ -6,78 +6,84 @@
 /*   By: shkondo <shkondo@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 08:46:26 by shkondo           #+#    #+#             */
-/*   Updated: 2026/03/01 21:41:28 by shkondo          ###   ########.fr       */
+/*   Updated: 2026/03/11 10:00:00 by shkondo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include "philo.h"
 
-void	philo_init(int number_of_philosophers, (void *)philo_exec(philo),
-		t_philo *philo)
+static int	is_valid_arg(char *str)
 {
-	pthread_t	thread;
-	int			ret;
-	int			count;
+	int	idx;
 
-	count = 0;
-	philo->id = 0;
-	ret = pthread_create(&thread, NULL, philosopher_routine, (void *)philo);
-	while (count < number_of_philosophers)
+	idx = 0;
+	while (str[idx])
 	{
-		philo->thread = 0;
-		philo->id += 1;
-		philo->fork = 0;
+		if (str[idx] < '0' || str[idx] > '9')
+			return (0);
+		idx++;
 	}
+	if (idx == 0)
+		return (0);
+	return (1);
 }
 
-void	philo_exec(t_philo *philo)
+int	parse_args(t_table *table, int argc, char **argv)
 {
-	return ;
-}
+	int	idx;
 
-void	print_timestamp(t_philo *philo)
-{
-	struct timeval	now;
-	long			elapsed_ms;
-
-	gettimeofday(&now, NULL);
-	elapsed_ms = (now.tv_sec - start.tv_sec) * 1000 + (now.tv_usec
-			- start.tv_usec) / 1000;
-	printf('%d %d has taken a fork', elapsed_ms, philo->id);
-}
-
-int	count_to_die(t_philo philo, int time_to_die)
-{
-	int			time;
-	pthread_t	thread;
-
-	thread = philo->thread;
-	while (thread)
+	if (argc != 5 && argc != 6)
+		return (1);
+	idx = 1;
+	while (idx < argc)
 	{
-		if (time > time_to_die)
+		if (!is_valid_arg(argv[idx]))
 			return (1);
+		if (ft_atoi(argv[idx]) <= 0)
+			return (1);
+		idx++;
+	}
+	(void)table;
+	return (0);
+}
+
+int	start_simulation(t_table *table)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < table->nb_philo)
+	{
+		if (pthread_create(&table->philos[idx].thread, NULL,
+				philo_routine, &table->philos[idx]) != 0)
+			return (1);
+		idx++;
+	}
+	monitor_philos(table);
+	idx = 0;
+	while (idx < table->nb_philo)
+	{
+		pthread_join(table->philos[idx].thread, NULL);
+		idx++;
 	}
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_philo	*philo;
-	t_philo	*tmp;
-	int		number_of_philosophers;
+	t_table	table;
 
-	if (argc != 5 || argc != 6)
-		return (1);
-	number_of_philosophers = ft_atoi(argv[1]);
-	tmp = malloc(number_of_philosophers * sizeof(t_philo));
-	if (!tmp)
+	if (parse_args(&table, argc, argv) != 0)
 	{
-		free(tmp);
+		write(2, "Error: invalid arguments\n", 25);
 		return (1);
 	}
-	philo = tmp;
-	philo_init(&philo);
-	philo_exec(philo);
-	philo_destruct(philo);
+	if (init_table(&table, argc, argv) != 0)
+	{
+		write(2, "Error: initialization failed\n", 29);
+		return (1);
+	}
+	start_simulation(&table);
+	cleanup_table(&table);
 	return (0);
 }
