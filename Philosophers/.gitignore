@@ -1,6 +1,9 @@
 # local files
 docs/subjects
 
+#object files
+philo
+
 # AI Settings
 CLAUDE.md
 .claude/

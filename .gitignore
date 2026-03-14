@@ -1,5 +1,6 @@
 *.log
 a.out
+*.o
 .DS_Store
 .vscode
 .idea

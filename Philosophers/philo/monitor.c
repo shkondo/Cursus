@@ -42,8 +42,11 @@ static int	check_death(t_table *table)
 		pthread_mutex_unlock(&table->philos[idx].meal_lock);
 		if (time_since_meal > table->time_to_die)
 		{
-			print_status(&table->philos[idx], MSG_DIED);
+			pthread_mutex_lock(&table->print_lock);
 			set_sim_stop(table);
+			printf("%ld %d %s\n", get_time() - table->start_time,
+				table->philos[idx].id, MSG_DIED);
+			pthread_mutex_unlock(&table->print_lock);
 			return (1);
 		}
 		idx++;
