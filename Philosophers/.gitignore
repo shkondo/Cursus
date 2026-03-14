@@ -1,6 +1,5 @@
 # local files
-docs/subjects
-docs/study
+docs/
 
 #object files
 philo
