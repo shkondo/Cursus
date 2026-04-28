@@ -1,0 +1,90 @@
+# Modern, industry-standard C/C++ formatting.
+# Placed at ~/Development/42tokyo/.clang-format so every C/C++ file under this
+# tree inherits it (clang-format walks upward from each source file).
+#
+# Style summary:
+#   - 4-space indentation (no tabs)
+#   - 100-column lines
+#   - K&R / Attach brace style (opening brace on the same line)
+#   - Pointer attached to the variable: `char *str` (C convention)
+#   - Includes sorted within blocks, but blocks preserved
+#   - No one-liner if/for/while — always break into multiple lines
+
+Language: Cpp
+BasedOnStyle: LLVM
+
+# --- Indentation ---
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+IndentCaseLabels: true
+AccessModifierOffset: -4
+NamespaceIndentation: None
+
+# --- Line length ---
+ColumnLimit: 100
+
+# --- Braces: K&R / Attach ---
+BreakBeforeBraces: Attach
+Cpp11BracedListStyle: true
+
+# --- Pointer / reference style: `char *str` ---
+PointerAlignment: Right
+ReferenceAlignment: Pointer
+DerivePointerAlignment: false
+
+# --- Function signatures ---
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: true
+BinPackParameters: true
+BinPackArguments: true
+AlignAfterOpenBracket: Align
+
+# --- Forbid one-liners (improves diff hygiene) ---
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortLambdasOnASingleLine: All
+
+# --- Spacing ---
+SpaceBeforeParens: ControlStatements
+SpacesInParens: Never
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInContainerLiterals: false
+SpacesInSquareBrackets: false
+
+# --- Alignment ---
+AlignConsecutiveDeclarations:
+  Enabled: false
+AlignConsecutiveAssignments:
+  Enabled: false
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+AlignOperands: Align
+
+# --- Includes ---
+# Sort within each include block but preserve grouping (e.g., system vs project).
+SortIncludes: CaseSensitive
+IncludeBlocks: Preserve
+
+# --- Misc ---
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+ReflowComments: true
+InsertNewlineAtEOF: true
+DeriveLineEnding: false
+UseCRLF: false
+FixNamespaceComments: true
